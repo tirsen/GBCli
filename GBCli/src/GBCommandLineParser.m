@@ -93,7 +93,9 @@ const struct GBCommandLineKeys {
 
 - (BOOL)parseOptionsUsingDefaultArgumentsWithBlock:(GBCommandLineParseBlock)handler {
     NSProcessInfo *processInfo = [NSProcessInfo processInfo];
-    NSArray *arguments = [processInfo arguments];
+    NSMutableArray *arguments = [NSMutableArray arrayWithArray:[processInfo arguments]];
+    // Remove the first argument, it is the name of the executable.
+    [arguments removeObjectAtIndex:0];
     NSString *command = [processInfo processName];
 	return [self parseOptionsWithArguments:arguments commandLine:command block:handler];
 }
